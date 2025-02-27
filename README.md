@@ -82,4 +82,4 @@ npm install
 - 文件名特殊字符处理逻辑可能需要根据平台调整（如Windows文件命名限制）
 
 ## 📜 许可证
-MIT License © 2025 tabtac
+GPL License © 2025 tabtac
