@@ -1,0 +1,22 @@
+.writeup-helper-btn {
+    position: fixed;
+    top: 40px;
+    right: 20px;
+    z-index: 10000;
+    padding: 8px 16px;
+    background-color: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.writeup-helper-btn:hover {
+    background-color: #6d28d9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+} 

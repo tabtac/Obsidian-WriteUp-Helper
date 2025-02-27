@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "Obsidian WriteUp Helper",
+    "version": "1.1",
+    "description": "快速生成WriteUp模板到Obsidian",
+    "permissions": [
+        "activeTab"
+    ],
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.nssctf.cn/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "css": [
+                "styles.css"
+            ],
+            "run_at": "document_start"
+        }
+    ]
+}
