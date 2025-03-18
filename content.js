@@ -20,6 +20,9 @@ function formatTitle(title) {
     // 移除 "| NSSCTF" 部分
     title = title.split('|')[0].trim();
     
+    // 移除特殊字符
+    title = title.replace(/[?|:<>]/g, '');
+    
     // 处理中括号
     let formattedTitle = '';
     let bracketContents = [];
@@ -106,4 +109,4 @@ new MutationObserver(() => {
         lastUrl = url;
         createButton();
     }
-}).observe(document, {subtree: true, childList: true}); 
+}).observe(document, {subtree: true, childList: true});
