@@ -1,0 +1,45 @@
+{
+  "name": "obsidian-writeup-helper",
+  "version": "2.0.0",
+  "description": "快速生成WriteUp模板到Obsidian - 支持多平台CTF、智能信息提取、自定义模板",
+  "main": "content.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint *.js",
+    "dev": "web-ext run --start-url https://www.nssctf.cn",
+    "package": "web-ext build --overwrite-dest"
+  },
+  "keywords": [
+    "obsidian",
+    "writeup",
+    "ctf",
+    "nssctf",
+    "chrome-extension",
+    "browser-extension",
+    "markdown",
+    "template"
+  ],
+  "author": "tabtac",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tabtac/Obsidian-WriteUp-Helper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tabtac/Obsidian-WriteUp-Helper/issues"
+  },
+  "homepage": "https://github.com/tabtac/Obsidian-WriteUp-Helper#readme",
+  "devDependencies": {
+    "archiver": "^5.3.1",
+    "eslint": "^8.0.0",
+    "web-ext": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "Chrome >= 88",
+    "Firefox >= 78"
+  ]
+}

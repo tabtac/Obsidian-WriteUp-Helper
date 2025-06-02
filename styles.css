@@ -1,22 +1,530 @@
+/* 主按钮样式 */
 .writeup-helper-btn {
     position: fixed;
     top: 40px;
     right: 20px;
     z-index: 10000;
-    padding: 8px 16px;
-    background-color: #7c3aed;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 500;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    min-width: 100px;
+    max-width: 120px; /* 防止按钮变形 */
+    width: auto;
+    text-align: center;
+    white-space: nowrap; /* 防止文字换行 */
+    overflow: hidden; /* 防止内容溢出 */
+    touch-action: none; /* 防止移动端滚动干扰 */
+    box-sizing: border-box; /* 确保padding计算正确 */
 }
 
 .writeup-helper-btn:hover {
-    background-color: #6d28d9;
+    background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+}
+
+.writeup-helper-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+}
+
+.writeup-helper-btn:disabled,
+.writeup-helper-btn.processing {
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.writeup-helper-btn.processing {
+    position: relative;
+    overflow: hidden;
+}
+
+.writeup-helper-btn.processing::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* 通知样式 */
+.writeup-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 10001;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.writeup-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.writeup-notification-success {
+    background-color: #10b981;
+    color: white;
+}
+
+.writeup-notification-error {
+    background-color: #ef4444;
+    color: white;
+}
+
+.writeup-notification-info {
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .writeup-helper-btn {
+        top: 20px;
+        right: 15px;
+        padding: 8px 14px;
+        font-size: 13px;
+        min-width: 80px;
+    }
+
+    .writeup-notification {
+        top: 80px;
+        right: 15px;
+        max-width: 250px;
+        font-size: 13px;
+    }
+}
+
+/* 拖拽相关样式 */
+.writeup-helper-btn.dragging {
+    opacity: 0.8;
+    cursor: grabbing !important;
+    cursor: -webkit-grabbing !important;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+    z-index: 10001;
+    transition: none; /* 拖拽时禁用过渡动画 */
+    transform: none; /* 防止变形 */
+    pointer-events: none; /* 防止拖拽时触发其他事件 */
+}
+
+.writeup-helper-btn.drag-end {
+    animation: dragEndBounce 0.2s ease-out;
+}
+
+@keyframes dragEndBounce {
+    0% { transform: scale(1.05); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+/* 拖拽时的光标样式 */
+.writeup-helper-btn:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+/* 悬停时显示可拖拽提示 */
+.writeup-helper-btn:hover:not(.processing):not(.dragging) {
+    cursor: grab;
+    cursor: -webkit-grab;
+}
+
+/* 拖拽时禁用页面选择 */
+body.dragging-active {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .writeup-helper-btn {
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    }
+
+    .writeup-helper-btn:hover {
+        box-shadow: 0 8px 20px rgba(124, 58, 237, 0.5);
+    }
+
+    .writeup-helper-btn.dragging {
+        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.6);
+    }
+}
+
+/* 设置面板样式 */
+.writeup-settings-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.writeup-settings-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.writeup-settings-panel .settings-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 100%;
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.writeup-settings-panel.show .settings-container {
+    transform: scale(1);
+}
+
+/* 设置面板头部 */
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+    color: white;
+    flex-shrink: 0;
+    border-radius: 12px 12px 0 0;
+}
+
+.settings-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.settings-close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.settings-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 设置面板内容 */
+.settings-content {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.settings-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.settings-section {
+    margin-bottom: 32px;
+}
+
+.settings-section:last-child {
+    margin-bottom: 0;
+}
+
+.settings-section h4 {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #7c3aed;
+    padding-bottom: 8px;
+}
+
+.settings-item {
+    margin-bottom: 16px;
+}
+
+.settings-item label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #374151;
+    font-size: 14px;
+}
+
+.settings-item input,
+.settings-item select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.settings-item input:focus,
+.settings-item select:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.template-editor textarea {
+    width: 100%;
+    min-height: 200px;
+    max-height: 300px;
+    padding: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.template-editor textarea:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.template-editor textarea:disabled {
+    background-color: #f9fafb;
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+.template-help {
+    margin-top: 8px;
+}
+
+.template-help small {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+/* 设置面板底部 */
+.settings-footer {
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    border-radius: 0 0 12px 12px;
+}
+
+.settings-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.settings-btn-primary {
+    background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+    color: white;
+}
+
+.settings-btn-primary:hover {
+    background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-} 
+}
+
+.settings-btn-secondary {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.settings-btn-secondary:hover {
+    background: #d1d5db;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .writeup-settings-panel {
+        padding: 10px;
+    }
+
+    .writeup-settings-panel .settings-container {
+        max-width: none;
+        width: 100%;
+        max-height: calc(100vh - 20px);
+    }
+
+    .settings-header {
+        padding: 16px 20px;
+    }
+
+    .settings-header h3 {
+        font-size: 16px;
+    }
+
+    .settings-content {
+        padding: 20px;
+    }
+
+    .settings-footer {
+        padding: 16px 20px;
+        flex-direction: column;
+    }
+
+    .settings-btn {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .settings-btn:last-child {
+        margin-bottom: 0;
+    }
+
+    .template-editor textarea {
+        min-height: 150px;
+        font-size: 14px;
+    }
+
+    .settings-item input,
+    .settings-item select {
+        font-size: 16px; /* 防止iOS缩放 */
+    }
+}
+
+/* 额外的小屏幕优化 */
+@media (max-width: 480px) {
+    .writeup-settings-panel {
+        padding: 5px;
+    }
+
+    .writeup-settings-panel .settings-container {
+        max-height: calc(100vh - 10px);
+        border-radius: 8px;
+    }
+
+    .settings-header {
+        padding: 12px 16px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .settings-header h3 {
+        font-size: 14px;
+    }
+
+    .settings-close-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 20px;
+    }
+
+    .settings-content {
+        padding: 16px;
+    }
+
+    .settings-section {
+        margin-bottom: 24px;
+    }
+
+    .settings-section h4 {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .settings-item {
+        margin-bottom: 12px;
+    }
+
+    .settings-item label {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+    .template-editor textarea {
+        min-height: 120px;
+        font-size: 13px;
+    }
+
+    .settings-footer {
+        padding: 12px 16px;
+        border-radius: 0 0 8px 8px;
+    }
+
+    .settings-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}

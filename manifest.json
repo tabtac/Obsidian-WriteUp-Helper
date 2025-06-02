@@ -1,10 +1,11 @@
 {
     "manifest_version": 3,
     "name": "Obsidian WriteUp Helper",
-    "version": "1.1",
-    "description": "快速生成WriteUp模板到Obsidian",
+    "version": "2.0",
+    "description": "快速生成WriteUp模板到Obsidian - 支持多平台CTF、智能信息提取、自定义模板",
     "permissions": [
-        "activeTab"
+        "activeTab",
+        "storage"
     ],
     "icons": {
         "16": "icon16.png",
@@ -14,15 +15,29 @@
     "content_scripts": [
         {
             "matches": [
-                "*://www.nssctf.cn/*"
+                "*://www.nssctf.cn/*",
+                "*://nssctf.cn/*",
+                "*://ctf.show/*",
+                "*://www.ctf.show/*",
+                "*://buuoj.cn/*",
+                "*://www.buuoj.cn/*"
             ],
             "js": [
+                "config.js",
                 "content.js"
             ],
             "css": [
                 "styles.css"
             ],
-            "run_at": "document_start"
+            "run_at": "document_idle"
         }
-    ]
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["icon16.png", "icon48.png", "icon128.png"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "author": "tabtac",
+    "homepage_url": "https://github.com/tabtac/Obsidian-WriteUp-Helper"
 }
